@@ -1,0 +1,74 @@
+<div class="dashboard-container">
+  <div class="header" fxLayout fxLayoutAlign="space-between center">
+    <h3>List of Users</h3>
+    <button mat-flat-button color="primary" (click)="openDialog('add')">Add New User</button>
+  </div>
+
+  <div class="table-container">
+    <div class="example-container mat-elevation-z8">
+      <div class="loader-container" *ngIf="isLoadingResults">
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <div class="example-table-container">
+        <table
+          mat-table
+          [dataSource]="data"
+          class="example-table"
+          matSort
+          matSortActive="created"
+          matSortDisableClear
+          matSortDirection="desc"
+        >
+          <!-- <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+            <mat-header-cell *cdkHeaderCellDef>{{ column | titlecase }}</mat-header-cell>
+            <mat-cell *cdkCellDef="let row">{{ row[column] }}</mat-cell>
+          </ng-container> -->
+          <ng-container
+            *ngFor="let col of displayedColumns; let colIndex = index"
+            matColumnDef="{{ col }}"
+          >
+            <!-- <th mat-header-cell *matHeaderCellDef>
+              <span *ngIf="!col.isAction">
+                {{ col.id | titlecase }}
+              </span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element[col.id] }}
+            </td> -->
+            <th mat-header-cell *matHeaderCellDef>
+              {{ col }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <ng-container *ngIf="col !== 'edit' && col !== 'delete'">
+                {{ element[col] }}
+              </ng-container>
+              <ng-container *ngIf="col === 'edit' || col === 'delete'">
+                <button
+                  (click)="action(col, element)"
+                  mat-icon-button
+                  [color]="col === 'edit' ? 'primary' : 'warn'"
+                >
+                  <mat-icon>{{ col }}</mat-icon>
+                </button>
+                <!-- <mat-icon mat-icon-button style="cursor: pointer">{{ col }}</mat-icon> -->
+              </ng-container>
+            </td>
+            <!-- <td mat-cell *matCellDef="edit">edit</td> -->
+            <!-- <mat-header-cell *matHeaderCellDef>{{ col | titlecase }}</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element[col] }} </mat-cell> -->
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+
+      <mat-paginator
+        (page)="pageEvent($event)"
+        [length]="resultsLength"
+        [pageSize]="pageSize"
+      ></mat-paginator>
+    </div>
+  </div>
+</div>

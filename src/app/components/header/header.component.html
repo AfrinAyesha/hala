@@ -1,0 +1,26 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <div style="width: 100%" fxLayout fxLayoutAlign="space-between center">
+    <div>
+      <nav mat-tab-nav-bar backgroundColor="primary">
+        <a
+          mat-tab-link
+          *ngFor="let link of links"
+          (click)="activeLink = link"
+          [active]="activeLink == link"
+          [routerLink]="link.link"
+        >
+          {{ link.label }}
+        </a>
+      </nav>
+    </div>
+    <div>
+      <button mat-stroked-button (click)="logout()">Logout</button>
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        <mat-icon>share</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>

@@ -1,0 +1,64 @@
+<div [ngStyle.xs]="{ width: '100%' }" class="add-update-container">
+  <h2>{{ pageType | titlecase }} user</h2>
+  <div class="form-container">
+    <form [formGroup]="addUpdateForm" fxLayout="column" fxLayoutAlign="center center">
+      <mat-form-field appearance="outline" style="width: 40%" [ngStyle.xs]="{ width: '100%' }">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" formControlName="name" required />
+        <mat-error
+          *ngIf="
+            addUpdateForm.controls['name'].touched &&
+            addUpdateForm.controls['name'].hasError('required')
+          "
+        >
+          This is a required field
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" style="width: 40%" [ngStyle.xs]="{ width: '100%' }">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" required />
+        <mat-error
+          *ngIf="
+            addUpdateForm.controls['email'].touched &&
+            (addUpdateForm.controls['email'].hasError('required') ||
+              addUpdateForm.controls['email'].hasError('email'))
+          "
+        >
+          Please enter a valid email
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" style="width: 40%" [ngStyle.xs]="{ width: '100%' }">
+        <mat-label>Location</mat-label>
+        <input matInput type="text" formControlName="location" required />
+        <mat-error
+          *ngIf="
+            addUpdateForm.controls['location'].touched &&
+            addUpdateForm.controls['location'].hasError('required')
+          "
+        >
+          This is a required field
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </div>
+  <div fxLayout fxLayoutAlign="center center" class="action-container">
+    <button
+      [disabled]="addUpdateForm.invalid"
+      mat-flat-button
+      *ngIf="pageType === 'add'"
+      color="primary"
+      (click)="closeDialog()"
+    >
+      Add
+    </button>
+    <button
+      [disabled]="addUpdateForm.invalid"
+      mat-flat-button
+      *ngIf="pageType === 'edit'"
+      color="primary"
+      (click)="closeDialog()"
+    >
+      Update
+    </button>
+  </div>
+</div>
